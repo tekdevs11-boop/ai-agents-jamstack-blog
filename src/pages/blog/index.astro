@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+// Fetch all published blog posts ordered by date descending
+const posts = (await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+})).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout 
+  title="Blog & Insights — Agentes.AI" 
+  description="Explora artículos, guías y tutoriales sobre automatización B2B, Inteligencia Artificial autónoma y desarrollo JAMstack."
+>
+  <section class="blog-page-header">
+    <div class="container">
+      <span class="mono-badge purple">Publicaciones & Artículos</span>
+      <h1 class="page-title">Blog & Insights <span class="text-gradient">de IA B2B</span></h1>
+      <p class="page-subtitle">
+        Guías técnicas, análisis estratégicos y tutoriales sobre la implementación de Agentes de IA en empresas modernas.
+      </p>
+    </div>
+  </section>
+
+  <section class="blog-list-section">
+    <div class="container">
+      {posts.length > 0 ? (
+        <div class="blog-grid">
+          {posts.map((post) => (
+            <BlogCard
+              title={post.data.title}
+              excerpt={post.data.excerpt}
+              date={post.data.date}
+              slug={post.slug}
+              category={post.data.category}
+              readTime={post.data.readTime}
+              image={post.data.image}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="tech-card empty-posts">
+          <p>Aún no hay publicaciones en el blog.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-page-header {
+    padding: 4rem 0 3rem 0;
+    text-align: center;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .page-title {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+  }
+
+  .page-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .blog-list-section {
+    padding: 4rem 0 6rem 0;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .empty-posts {
+    text-align: center;
+    padding: 3rem;
+  }
+</style>

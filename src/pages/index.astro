@@ -4,10 +4,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import BlogCard from '../components/BlogCard.astro';
 import AgentChatMockup from '../components/AgentChatMockup.astro';
 
-// Fetch published blog posts ordered by date descending
-const posts = (await getCollection('blog', ({ data }) => {
+// Fetch published blog posts ordered by date descending, max 3 on home page
+const recentPosts = (await getCollection('blog', ({ data }) => {
   return data.draft !== true;
-})).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+})).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3);
 ---
 
 <BaseLayout title="Agentes.AI — Infraestructura de IA B2B y Blog JAMstack">
@@ -36,8 +36,8 @@ const posts = (await getCollection('blog', ({ data }) => {
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </a>
-        <a href="#blog" class="btn-secondary">
-          <span>Leer Blog & Guías</span>
+        <a href="/blog" class="btn-secondary">
+          <span>Ver todo el Blog</span>
         </a>
       </div>
 
@@ -73,38 +73,48 @@ const posts = (await getCollection('blog', ({ data }) => {
         <div class="tech-card feature-card">
           <div class="feature-icon emerald">💎</div>
           <h3>100% Cero Costo de Por Vida</h3>
-          <p>Desplegado gratuitamente en Netlify o Vercel. Gestión visual de contenido desde <code>/admin</code> respaldada por repositorios de GitHub.</p>
+          <p>Desplegado gratuitamente en Netlify o Vercel. Gestión visual de contenido desde la plataforma respaldada por repositorios de GitHub.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Blog Feed Section -->
+  <!-- Blog Feed Section (Max 3 Posts) -->
   <section class="blog-feed-section" id="blog">
     <div class="container">
       <div class="section-header">
-        <span class="mono-badge purple">Publicaciones Recientes</span>
+        <span class="mono-badge purple">Últimas Publicaciones</span>
         <h2>Insights de IA & Arquitectura de Software</h2>
-        <p>Aprende a escalar tu compañía con automatizaciones inteligentes y mejores prácticas de ingeniería.</p>
+        <p>Artículos destacados sobre automatización e inteligencia artificial empresarial.</p>
       </div>
 
-      {posts.length > 0 ? (
-        <div class="blog-grid">
-          {posts.map((post) => (
-            <BlogCard
-              title={post.data.title}
-              excerpt={post.data.excerpt}
-              date={post.data.date}
-              slug={post.slug}
-              category={post.data.category}
-              readTime={post.data.readTime}
-              image={post.data.image}
-            />
-          ))}
-        </div>
+      {recentPosts.length > 0 ? (
+        <>
+          <div class="blog-grid">
+            {recentPosts.map((post) => (
+              <BlogCard
+                title={post.data.title}
+                excerpt={post.data.excerpt}
+                date={post.data.date}
+                slug={post.slug}
+                category={post.data.category}
+                readTime={post.data.readTime}
+                image={post.data.image}
+              />
+            ))}
+          </div>
+          <div class="view-all-wrapper">
+            <a href="/blog" class="btn-secondary">
+              <span>Ver todas las publicaciones del Blog ({recentPosts.length}+)</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </>
       ) : (
         <div class="tech-card empty-posts">
-          <p>No hay publicaciones aún. Agrega una desde el CMS en <a href="/admin">/admin</a>.</p>
+          <p>No hay publicaciones aún.</p>
         </div>
       )}
     </div>
@@ -223,6 +233,12 @@ const posts = (await getCollection('blog', ({ data }) => {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
+  }
+
+  .view-all-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
   }
 
   .empty-posts {
