@@ -12,7 +12,7 @@ const {
 } = Astro.props;
 ---
 
-<div class="lead-form-card">
+<div class="lead-form-card" id="lead-form">
   <div class="form-header">
     <div class="mono-badge emerald">100% Cero Costo JAMstack</div>
     <h3>{title}</h3>
@@ -25,9 +25,19 @@ const {
     data-netlify="true" 
     action="/producto?success=true" 
     class="form-body"
+    id="b2b-form"
   >
     <!-- Hidden Netlify Forms field -->
     <input type="hidden" name="form-name" value="b2b-lead-capture" />
+
+    <div class="form-group">
+      <label for="selectedPlan">Plan Seleccionado</label>
+      <select id="selectedPlan" name="selectedPlan" required>
+        <option value="Starter (Gratis para siempre)">Starter — Gratis para siempre</option>
+        <option value="Enterprise (USD 99 / mes)">Enterprise — USD 99 / mes</option>
+        <option value="Solución Personalizada">Solución 100% Personalizada</option>
+      </select>
+    </div>
 
     <div class="form-group">
       <label for="fullName">Nombre y Apellido</label>
@@ -40,18 +50,13 @@ const {
     </div>
 
     <div class="form-group">
-      <label for="companySize">Tamaño de Organización</label>
-      <select id="companySize" name="companySize">
-        <option value="1-10">1 - 10 empleados (Startup)</option>
-        <option value="11-50" selected>11 - 50 empleados (Pyme / Growth)</option>
-        <option value="51-200">51 - 200 empleados (Enterprise)</option>
-        <option value="200+">200+ empleados (Corporate)</option>
-      </select>
+      <label for="phone">Teléfono / WhatsApp (Opcional)</label>
+      <input type="tel" id="phone" name="phone" placeholder="+54 9 11 1234-5678" />
     </div>
 
     <div class="form-group">
-      <label for="useCase">¿Qué proceso deseas automatizar con IA?</label>
-      <textarea id="useCase" name="useCase" rows="3" placeholder="Ej. Calificación de prospectos en sitio web, soporte técnico de API Nivel 1..."></textarea>
+      <label for="useCase">¿Qué proceso o necesidades deseas automatizar?</label>
+      <textarea id="useCase" name="useCase" rows="3" placeholder="Ej. Atención al cliente B2B, integración con CRM, calificación de prospectos..."></textarea>
     </div>
 
     <button type="submit" class="btn-primary btn-full">

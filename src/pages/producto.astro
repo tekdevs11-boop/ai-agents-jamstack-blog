@@ -103,7 +103,7 @@ import LeadForm from '../components/LeadForm.astro';
           <div class="price-note">
             ℹ️ <em>Los entrenamientos, personalizaciones y desarrollos solicitados posteriormente se presupuestan por separado.</em>
           </div>
-          <a href="#lead-form" class="btn-secondary btn-full">Comenzar gratis</a>
+          <a href="#lead-form" class="btn-secondary btn-full" data-plan="Starter">Comenzar gratis</a>
         </div>
 
         <!-- Plan 2: Enterprise -->
@@ -129,7 +129,7 @@ import LeadForm from '../components/LeadForm.astro';
             <li>✅ Prioridad en nuevas solicitudes.</li>
             <li>✅ Acompañamiento permanente durante el crecimiento del negocio.</li>
           </ul>
-          <a href="#lead-form" class="btn-primary btn-full">Quiero Enterprise</a>
+          <a href="#lead-form" class="btn-primary btn-full" data-plan="Enterprise">Quiero Enterprise</a>
         </div>
       </div>
 
@@ -141,6 +141,23 @@ import LeadForm from '../components/LeadForm.astro';
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Autoseleccionar el plan al hacer clic en el botón correspondiente
+  document.querySelectorAll('[data-plan]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const planName = btn.getAttribute('data-plan');
+      const planSelect = document.getElementById('selectedPlan') as HTMLSelectElement;
+      if (planSelect && planName) {
+        if (planName === 'Starter') {
+          planSelect.value = 'Starter (Gratis para siempre)';
+        } else if (planName === 'Enterprise') {
+          planSelect.value = 'Enterprise (USD 99 / mes)';
+        }
+      }
+    });
+  });
+</script>
 
 <style>
   .landing-hero {
