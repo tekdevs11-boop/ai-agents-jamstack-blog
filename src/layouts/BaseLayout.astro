@@ -57,12 +57,11 @@ const {
 
   <Footer />
 
-  <script>
-    // Decap CMS Netlify Identity Redirection Handler
+  <script is:inline>
     if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", (user: any) => {
+      window.netlifyIdentity.on("init", function(user) {
         if (!user) {
-          window.netlifyIdentity.on("login", () => {
+          window.netlifyIdentity.on("login", function() {
             document.location.href = "/admin/";
           });
         }
