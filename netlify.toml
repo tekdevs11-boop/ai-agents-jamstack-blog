@@ -1,9 +1,9 @@
 # Netlify Build Configuration
-# Llama a Astro directamente vía Node para garantizar ejecución limpia
-# en cualquier entorno Linux, sin depender de permisos de binarios del shell.
+# npm install se llama explícitamente para garantizar que node_modules
+# esté disponible antes de compilar en el entorno CI de Netlify.
 
 [build]
-  command = "node ./node_modules/astro/bin/astro.js build"
+  command = "npm install && npm run build"
   publish = "dist"
 
 [build.environment]
