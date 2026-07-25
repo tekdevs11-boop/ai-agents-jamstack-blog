@@ -210,9 +210,12 @@ p {
 
 /* Text Gradient Effect */
 .text-gradient {
+  display: inline-block;
   background: linear-gradient(135deg, #ffffff 30%, var(--accent-purple) 70%, var(--accent-cyan) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .text-gradient-cyan {
