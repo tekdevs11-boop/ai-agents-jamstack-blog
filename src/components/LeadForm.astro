@@ -10,6 +10,8 @@ const {
   subtitle = "Recibe un prototipo funcional de agente entrenado con la documentación de tu empresa sin costo inicial.",
   buttonText = "Obtener Acceso a Demostración" 
 } = Astro.props;
+
+const isSuccess = Astro.url.searchParams.get('success') === 'true';
 ---
 
 <div class="lead-form-card" id="lead-form">
@@ -19,91 +21,66 @@ const {
     <p>{subtitle}</p>
   </div>
 
-  <div id="form-success-message" style="display: none;" class="success-banner">
-    <div class="success-icon">✅</div>
-    <h4>¡Solicitud Enviada con Éxito!</h4>
-    <p>Hemos recibido tus datos correctamente. Nuestro equipo se pondrá en contacto contigo a la brevedad para configurar tu Agente IA.</p>
-  </div>
-
-  <form 
-    name="b2b-lead-capture" 
-    method="POST" 
-    data-netlify="true" 
-    action="/producto?success=true" 
-    class="form-body"
-    id="b2b-form"
-  >
-    <!-- Hidden Netlify Forms field -->
-    <input type="hidden" name="form-name" value="b2b-lead-capture" />
-
-    <div class="form-group">
-      <label for="selectedPlan">Plan Seleccionado</label>
-      <select id="selectedPlan" name="selectedPlan" required>
-        <option value="Starter (Gratis para siempre)">Starter — Gratis para siempre</option>
-        <option value="Enterprise (USD 99 / mes)">Enterprise — USD 99 / mes</option>
-        <option value="Solución Personalizada">Solución 100% Personalizada</option>
-      </select>
+  {isSuccess ? (
+    <div class="success-banner">
+      <div class="success-icon">✅</div>
+      <h4>¡Solicitud Enviada con Éxito!</h4>
+      <p>Hemos recibido tus datos correctamente. Nuestro equipo se pondrá en contacto contigo a la brevedad para configurar tu Agente IA.</p>
     </div>
+  ) : (
+    <form 
+      name="b2b-lead-capture" 
+      method="POST" 
+      data-netlify="true" 
+      action="/producto?success=true" 
+      class="form-body"
+      id="b2b-form"
+    >
+      <!-- Hidden Netlify Forms field -->
+      <input type="hidden" name="form-name" value="b2b-lead-capture" />
 
-    <div class="form-group">
-      <label for="fullName">Nombre y Apellido</label>
-      <input type="text" id="fullName" name="fullName" placeholder="Ej. Alex Turner" required />
-    </div>
+      <div class="form-group">
+        <label for="selectedPlan">Plan Seleccionado</label>
+        <select id="selectedPlan" name="selectedPlan" required>
+          <option value="Starter (Gratis para siempre)">Starter — Gratis para siempre</option>
+          <option value="Enterprise (USD 99 / mes)">Enterprise — USD 99 / mes</option>
+          <option value="Solución Personalizada">Solución 100% Personalizada</option>
+        </select>
+      </div>
 
-    <div class="form-group">
-      <label for="workEmail">Correo Corporativo</label>
-      <input type="email" id="workEmail" name="workEmail" placeholder="alex@tuempresa.com" required />
-    </div>
+      <div class="form-group">
+        <label for="fullName">Nombre y Apellido</label>
+        <input type="text" id="fullName" name="fullName" placeholder="Ej. Alex Turner" required />
+      </div>
 
-    <div class="form-group">
-      <label for="phone">Teléfono / WhatsApp (Opcional)</label>
-      <input type="tel" id="phone" name="phone" placeholder="+54 9 11 1234-5678" />
-    </div>
+      <div class="form-group">
+        <label for="workEmail">Correo Corporativo</label>
+        <input type="email" id="workEmail" name="workEmail" placeholder="alex@tuempresa.com" required />
+      </div>
 
-    <div class="form-group">
-      <label for="useCase">¿Qué proceso o necesidades deseas automatizar?</label>
-      <textarea id="useCase" name="useCase" rows="3" placeholder="Ej. Atención al cliente B2B, integración con CRM, calificación de prospectos..."></textarea>
-    </div>
+      <div class="form-group">
+        <label for="phone">Teléfono / WhatsApp (Opcional)</label>
+        <input type="tel" id="phone" name="phone" placeholder="+54 9 11 1234-5678" />
+      </div>
 
-    <button type="submit" class="btn-primary btn-full" id="submit-btn">
-      <span>{buttonText}</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-    </button>
+      <div class="form-group">
+        <label for="useCase">¿Qué proceso o necesidades deseas automatizar?</label>
+        <textarea id="useCase" name="useCase" rows="3" placeholder="Ej. Atención al cliente B2B, integración con CRM, calificación de prospectos..."></textarea>
+      </div>
 
-    <div class="form-privacy">
-      🔒 Tus datos se tratan bajo estrictos estándares de privacidad. Cero spam.
-    </div>
-  </form>
+      <button type="submit" class="btn-primary btn-full" id="submit-btn">
+        <span>{buttonText}</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+
+      <div class="form-privacy">
+        🔒 Tus datos se tratan bajo estrictos estándares de privacidad. Cero spam.
+      </div>
+    </form>
+  )}
 </div>
-
-<script>
-  // Envío síncrono/AJAX a Netlify Forms con confirmación visual en pantalla
-  const form = document.getElementById('b2b-form') as HTMLFormElement;
-  const successBanner = document.getElementById('form-success-message');
-
-  if (form && successBanner) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as any).toString(),
-      })
-        .then(() => {
-          form.style.display = 'none';
-          successBanner.style.display = 'block';
-        })
-        .catch((error) => {
-          console.error('Error enviando formulario:', error);
-          form.submit(); // Fallback directo
-        });
-    });
-  }
-</script>
 
 <style>
   .lead-form-card {
