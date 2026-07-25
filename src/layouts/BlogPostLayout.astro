@@ -21,10 +21,32 @@ const formattedDate = new Intl.DateTimeFormat('es-ES', {
 ---
 
 <BaseLayout title={`${title} | Blog Agentes.AI`} description={excerpt} image={image}>
+  <!-- JSON-LD BlogPosting Schema for AI & Search Engines -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": excerpt,
+    "image": image ? [image] : [],
+    "datePublished": date.toISOString(),
+    "author": [{
+      "@type": "Person",
+      "name": author
+    }],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Agentes.AI",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://tekdevs.netlify.app/favicon.svg"
+      }
+    }
+  })} />
+
   <article class="blog-article-section">
     <div class="container prose-container">
       <!-- Back Navigation -->
-      <a href="/#blog" class="back-link">
+      <a href="/blog" class="back-link">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>

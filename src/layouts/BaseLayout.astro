@@ -47,6 +47,16 @@ const {
 
   <!-- Netlify Identity Widget for Decap CMS -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <!-- JSON-LD Structured Data for AI & Search Engines -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Agentes.AI",
+    "url": "https://tekdevs.netlify.app",
+    "logo": "https://tekdevs.netlify.app/favicon.svg",
+    "description": description
+  })} />
 </head>
 <body>
   <Header />
