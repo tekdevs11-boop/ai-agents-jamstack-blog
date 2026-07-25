@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Astro internals
+.astro/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# System files (Mac/Windows)
+.DS_Store
+Thumbs.db
