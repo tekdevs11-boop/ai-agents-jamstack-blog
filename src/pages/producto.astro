@@ -72,48 +72,71 @@ import LeadForm from '../components/LeadForm.astro';
   </section>
 
   <!-- Pricing Tiers Section -->
-  <section class="pricing-section">
+  <section class="pricing-section" id="pricing">
     <div class="container">
       <div class="section-header">
-        <span class="mono-badge cyan">Licencias & Servicios</span>
-        <h2>Opciones Transparentes Sin Sorpresas</h2>
-        <p>Selecciona el nivel de implementación ideal para tu organización.</p>
+        <span class="mono-badge cyan">Planes & Servicios</span>
+        <h2>Tu Empleado Digital a la Medida de tu Empresa</h2>
+        <p>Comienza sin riesgo o accede a un servicio de evolución y acompañamiento continuo.</p>
       </div>
 
       <div class="pricing-grid">
-        <!-- Tier 1 -->
+        <!-- Plan 1: Starter -->
         <div class="tech-card price-card">
           <div class="price-header">
-            <span class="mono-badge">Starter Codekit</span>
-            <div class="price">$199 <span class="period">/ pago único</span></div>
-            <p>Ideal para desarrolladores y startups que desean desplegarlo por su cuenta.</p>
+            <span class="mono-badge">Starter</span>
+            <div class="price">Gratis <span class="period">para siempre</span></div>
+            <p>Todo lo necesario para comenzar con tu primer empleado digital.</p>
           </div>
           <ul class="price-features">
-            <li>✓ Código fuente completo en Astro + Decap CMS</li>
-            <li>✓ Plantilla de conexión RAG con OpenAI / Anthropic</li>
-            <li>✓ Documentación paso a paso en español</li>
-            <li>✓ Soporte vía GitHub Issues (30 días)</li>
+            <li>✅ Agente IA completamente funcional.</li>
+            <li>✅ Instalación incluida.</li>
+            <li>✅ Configuración inicial incluida.</li>
+            <li>✅ Funcionamiento con API gratuita de Google Gemini.</li>
+            <li>✅ Sin costo mensual.</li>
+            <li>✅ Uso ilimitado dentro de los límites de la API gratuita.</li>
+            <li>✅ Base lista para comenzar a trabajar.</li>
+            <li>✅ Posibilidad de solicitar entrenamientos adicionales.</li>
+            <li>✅ Posibilidad de solicitar nuevas funcionalidades.</li>
+            <li>✅ Posibilidad de solicitar integraciones con otros sistemas.</li>
           </ul>
-          <a href="#lead-form" class="btn-secondary btn-full">Solicitar Starter</a>
+          <div class="price-note">
+            ℹ️ <em>Los entrenamientos, personalizaciones y desarrollos solicitados posteriormente se presupuestan por separado.</em>
+          </div>
+          <a href="#lead-form" class="btn-secondary btn-full">Comenzar gratis</a>
         </div>
 
-        <!-- Tier 2 (Highlighted) -->
+        <!-- Plan 2: Enterprise -->
         <div class="tech-card price-card featured">
-          <div class="featured-tag">RECOMENDADO PARA EMPRESAS</div>
+          <div class="featured-tag">MÁS ELEGIDO</div>
           <div class="price-header">
-            <span class="mono-badge purple">Enterprise Managed Agent</span>
-            <div class="price">$850 <span class="period">/ proyecto llave en mano</span></div>
-            <p>Nos encargamos del entrenamiento completo y la integración en tu sistema.</p>
+            <span class="mono-badge purple">Enterprise</span>
+            <div class="price">USD 99 <span class="period">/ mes</span></div>
+            <p>Tu empleado digital evoluciona junto con tu empresa.</p>
           </div>
           <ul class="price-features">
-            <li>✓ <strong>Todo lo del plan Starter</strong></li>
-            <li>✓ Indexación y limpiado de hasta 500 páginas de documentos</li>
-            <li>✓ Customización visual con la identidad de tu marca</li>
-            <li>✓ Configuración de dominios y seguridad Git Gateway</li>
-            <li>✓ Capacitación de 2 horas para tu equipo</li>
+            <li>✅ <strong>Todo lo incluido en Starter.</strong></li>
+            <li>✅ Entrenamiento continuo incluido mientras el plan esté activo.</li>
+            <li>✅ Actualización permanente del conocimiento del agente.</li>
+            <li>✅ Personalización completa con la identidad de la empresa.</li>
+            <li>✅ Adaptación del tono de comunicación y lenguaje de marca.</li>
+            <li>✅ Capacitación para el equipo de trabajo.</li>
+            <li>✅ Optimización continua del rendimiento del agente.</li>
+            <li>✅ Incorporación de nuevas funciones sin costo de desarrollo cuando correspondan al servicio.</li>
+            <li>✅ Revisión periódica para detectar oportunidades de mejora.</li>
+            <li>✅ Consultoría para identificar nuevos procesos automatizables.</li>
+            <li>✅ Soporte prioritario.</li>
+            <li>✅ Prioridad en nuevas solicitudes.</li>
+            <li>✅ Acompañamiento permanente durante el crecimiento del negocio.</li>
           </ul>
-          <a href="#lead-form" class="btn-primary btn-full">Agendar Proyecto Enterprise</a>
+          <a href="#lead-form" class="btn-primary btn-full">Quiero Enterprise</a>
         </div>
+      </div>
+
+      <!-- Mensaje Inferior -->
+      <div class="custom-solution-note">
+        <p>¿Necesitás una solución completamente personalizada?</p>
+        <p class="highlight-text">Contactanos y diseñaremos un agente de IA adaptado específicamente a tu empresa.</p>
       </div>
     </div>
   </section>
@@ -266,6 +289,26 @@ import LeadForm from '../components/LeadForm.astro';
   .btn-full {
     margin-top: auto;
     width: 100%;
+  }
+
+  .price-note {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+
+  .custom-solution-note {
+    text-align: center;
+    margin-top: 3.5rem;
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .custom-solution-note .highlight-text {
+    color: #ffffff;
+    font-weight: 600;
   }
 
   @media (max-width: 900px) {
