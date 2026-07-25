@@ -1,6 +1,8 @@
 backend:
   name: git-gateway
-  branch: main # Rama principal de GitHub
+  repo: tekdevs11-boop/ai-agents-jamstack-blog
+  branch: main
+  site_domain: tekdevs.netlify.app
 
 # Carpeta donde se guardan las imágenes subidas desde el CMS
 media_folder: "public/uploads"

@@ -208,14 +208,9 @@ p {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Text Gradient Effect */
+/* Text Gradient & Accent Highlight Effect */
 .text-gradient {
-  display: inline-block;
-  background: linear-gradient(135deg, #ffffff 30%, var(--accent-purple) 70%, var(--accent-cyan) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--accent-purple);
 }
 
 .text-gradient-cyan {
