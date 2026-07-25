@@ -19,6 +19,12 @@ const {
     <p>{subtitle}</p>
   </div>
 
+  <div id="form-success-message" style="display: none;" class="success-banner">
+    <div class="success-icon">✅</div>
+    <h4>¡Solicitud Enviada con Éxito!</h4>
+    <p>Hemos recibido tus datos correctamente. Nuestro equipo se pondrá en contacto contigo a la brevedad para configurar tu Agente IA.</p>
+  </div>
+
   <form 
     name="b2b-lead-capture" 
     method="POST" 
@@ -59,7 +65,7 @@ const {
       <textarea id="useCase" name="useCase" rows="3" placeholder="Ej. Atención al cliente B2B, integración con CRM, calificación de prospectos..."></textarea>
     </div>
 
-    <button type="submit" class="btn-primary btn-full">
+    <button type="submit" class="btn-primary btn-full" id="submit-btn">
       <span>{buttonText}</span>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -71,6 +77,33 @@ const {
     </div>
   </form>
 </div>
+
+<script>
+  // Envío síncrono/AJAX a Netlify Forms con confirmación visual en pantalla
+  const form = document.getElementById('b2b-form') as HTMLFormElement;
+  const successBanner = document.getElementById('form-success-message');
+
+  if (form && successBanner) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString(),
+      })
+        .then(() => {
+          form.style.display = 'none';
+          successBanner.style.display = 'block';
+        })
+        .catch((error) => {
+          console.error('Error enviando formulario:', error);
+          form.submit(); // Fallback directo
+        });
+    });
+  }
+</script>
 
 <style>
   .lead-form-card {
@@ -153,5 +186,30 @@ const {
     font-size: 0.78rem;
     color: var(--text-dim);
     margin-top: 0.5rem;
+  }
+
+  .success-banner {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: var(--radius-md);
+  }
+
+  .success-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .success-banner h4 {
+    font-size: 1.35rem;
+    color: var(--accent-emerald);
+    margin-bottom: 0.5rem;
+  }
+
+  .success-banner p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
   }
 </style>
