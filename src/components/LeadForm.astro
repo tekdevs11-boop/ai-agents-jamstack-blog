@@ -1,0 +1,152 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+}
+
+const { 
+  title = "Solicita una Demostración de Agente IA B2B", 
+  subtitle = "Recibe un prototipo funcional de agente entrenado con la documentación de tu empresa sin costo inicial.",
+  buttonText = "Obtener Acceso a Demostración" 
+} = Astro.props;
+---
+
+<div class="lead-form-card">
+  <div class="form-header">
+    <div class="mono-badge emerald">100% Cero Costo JAMstack</div>
+    <h3>{title}</h3>
+    <p>{subtitle}</p>
+  </div>
+
+  <form 
+    name="b2b-lead-capture" 
+    method="POST" 
+    data-netlify="true" 
+    action="/producto?success=true" 
+    class="form-body"
+  >
+    <!-- Hidden Netlify Forms field -->
+    <input type="hidden" name="form-name" value="b2b-lead-capture" />
+
+    <div class="form-group">
+      <label for="fullName">Nombre y Apellido</label>
+      <input type="text" id="fullName" name="fullName" placeholder="Ej. Alex Turner" required />
+    </div>
+
+    <div class="form-group">
+      <label for="workEmail">Correo Corporativo</label>
+      <input type="email" id="workEmail" name="workEmail" placeholder="alex@tuempresa.com" required />
+    </div>
+
+    <div class="form-group">
+      <label for="companySize">Tamaño de Organización</label>
+      <select id="companySize" name="companySize">
+        <option value="1-10">1 - 10 empleados (Startup)</option>
+        <option value="11-50" selected>11 - 50 empleados (Pyme / Growth)</option>
+        <option value="51-200">51 - 200 empleados (Enterprise)</option>
+        <option value="200+">200+ empleados (Corporate)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="useCase">¿Qué proceso deseas automatizar con IA?</label>
+      <textarea id="useCase" name="useCase" rows="3" placeholder="Ej. Calificación de prospectos en sitio web, soporte técnico de API Nivel 1..."></textarea>
+    </div>
+
+    <button type="submit" class="btn-primary btn-full">
+      <span>{buttonText}</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <div class="form-privacy">
+      🔒 Tus datos se tratan bajo estrictos estándares de privacidad. Cero spam.
+    </div>
+  </form>
+</div>
+
+<style>
+  .lead-form-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glow);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .form-header h3 {
+    font-size: 1.6rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-header p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 0 3px var(--accent-purple-glow);
+  }
+
+  .form-group select option {
+    background: var(--bg-card);
+    color: #ffffff;
+  }
+
+  .btn-full {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .form-privacy {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+  }
+</style>

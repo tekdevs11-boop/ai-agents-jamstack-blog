@@ -1,0 +1,113 @@
+---
+const navLinks = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Blog & Insights', href: '/#blog' },
+  { name: 'Soluciones IA (B2B)', href: '/producto' },
+  { name: 'CMS Admin', href: '/admin', target: '_blank' },
+];
+---
+
+<header class="header">
+  <div class="container header-content">
+    <a href="/" class="logo">
+      <div class="logo-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 2a10 10 0 1 0 10 10H12V2z"/>
+          <circle cx="12" cy="12" r="3" fill="#06b6d4" stroke="none"/>
+        </svg>
+      </div>
+      <span class="logo-text">AGENTES<span class="highlight">.AI</span></span>
+    </a>
+
+    <nav class="nav">
+      {navLinks.map((link) => (
+        <a href={link.href} target={link.target || '_self'} class="nav-link">
+          {link.name}
+        </a>
+      ))}
+    </nav>
+
+    <div class="actions">
+      <a href="/producto" class="btn-primary btn-sm">
+        <span>Agentes IA</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.85rem 0;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid var(--border-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-purple);
+  }
+
+  .logo-text .highlight {
+    color: var(--accent-purple);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--accent-cyan);
+  }
+
+  .btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: var(--radius-sm);
+  }
+
+  @media (max-width: 768px) {
+    .nav {
+      display: none;
+    }
+  }
+</style>

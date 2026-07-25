@@ -1,0 +1,336 @@
+---
+---
+
+<div class="chat-window-card">
+  <!-- Window Top Bar -->
+  <div class="chat-header">
+    <div class="window-controls">
+      <span class="control-dot red"></span>
+      <span class="control-dot yellow"></span>
+      <span class="control-dot green"></span>
+    </div>
+    <div class="chat-title">
+      <span class="agent-avatar">🤖</span>
+      <div class="agent-info">
+        <span class="agent-name">Agente B2B • Ventas & Soporte Enterprise</span>
+        <span class="agent-status"><span class="pulse-dot"></span> Entrenado con Knowledge Base v3.2</span>
+      </div>
+    </div>
+    <div class="badge-tech">RAG Active</div>
+  </div>
+
+  <!-- Chat Messages Container -->
+  <div class="chat-body" id="chat-body">
+    <div class="message system-message">
+      <div class="msg-content">
+        <span class="msg-badge">AI CORE</span> Conexión establecida con la Base de Conocimientos Corporativa. Pregúntame sobre integración, precios B2B o casos de éxito.
+      </div>
+    </div>
+
+    <div class="message user-message">
+      <div class="msg-bubble">
+        ¿Cómo puede un agente de IA reducir el tiempo de respuesta en nuestras cotizaciones B2B?
+      </div>
+    </div>
+
+    <div class="message agent-message">
+      <div class="agent-avatar-small">⚡</div>
+      <div class="msg-bubble">
+        <p><strong>Analizando documentos de producto...</strong></p>
+        <p>El agente lee las especificaciones requeridas por el cliente en PDFs o formularios, calcula la tarifa con tu matriz de precios y genera una propuesta formal en PDF en <strong>menos de 15 segundos</strong>.</p>
+        <div class="chat-stats">
+          <span class="stat-pill">⚡ Latencia: 420ms</span>
+          <span class="stat-pill">🎯 Precisión: 99.4%</span>
+          <span class="stat-pill">🔒 SOC2 Compliant</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Quick Prompts -->
+  <div class="quick-prompts">
+    <button class="prompt-chip" data-prompt="¿Qué documentos puedo usar para entrenar mi agente?">📄 Documentos aceptados</button>
+    <button class="prompt-chip" data-prompt="¿Cuánto cuesta implementar esto sin servidores?">💰 Costos y arquitectura</button>
+    <button class="prompt-chip" data-prompt="¿Cómo solicito una demo personalizada?">🚀 Solicitar Demo</button>
+  </div>
+
+  <!-- Chat Input Mockup -->
+  <div class="chat-input-area">
+    <input type="text" id="chat-input" placeholder="Haz una pregunta de prueba al agente IA..." readonly />
+    <button class="send-btn" id="send-btn" aria-label="Enviar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  // Interactive Simulation
+  const chatBody = document.getElementById('chat-body');
+  const promptChips = document.querySelectorAll('.prompt-chip');
+
+  const responses: Record<string, string> = {
+    '¿Qué documentos puedo usar para entrenar mi agente?': 
+      'Puedes conectar PDFs de catálogo, manuales de API, exportaciones de Notion, documentos de Word y logs de soporte histórico. La indexación es automática.',
+    '¿Cuánto cuesta implementar esto sin servidores?': 
+      'La arquitectura JAMstack (Astro + Decap CMS + Netlify) tiene un costo de infraestructura de **$0 de por vida**. Solo pagas por las llamadas API del modelo LLM si sobrepasas límites gratuitos.',
+    '¿Cómo solicito una demo personalizada?': 
+      '¡Excelente! Puedes completar el formulario al final de la página o ir directamente a la sección /producto para agendar una sesión privada.'
+  };
+
+  promptChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const promptText = chip.getAttribute('data-prompt') || '';
+      if (!promptText || !chatBody) return;
+
+      // Add user message
+      const userDiv = document.createElement('div');
+      userDiv.className = 'message user-message';
+      userDiv.innerHTML = `<div class="msg-bubble">${promptText}</div>`;
+      chatBody.appendChild(userDiv);
+
+      // Typing indicator
+      const agentDiv = document.createElement('div');
+      agentDiv.className = 'message agent-message';
+      agentDiv.innerHTML = `
+        <div class="agent-avatar-small">⚡</div>
+        <div class="msg-bubble">
+          <p>${responses[promptText] || 'Respuesta generada en tiempo real por el motor de Agentes IA.'}</p>
+        </div>
+      `;
+      
+      setTimeout(() => {
+        chatBody.appendChild(agentDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }, 400);
+
+      chatBody.scrollTop = chatBody.scrollHeight;
+    });
+  });
+</script>
+
+<style>
+  .chat-window-card {
+    background: #0b0d14;
+    border: 1px solid var(--border-glow);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px var(--accent-purple-glow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .chat-header {
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .window-controls {
+    display: flex;
+    gap: 6px;
+  }
+
+  .control-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .control-dot.red { background: #ff5f56; }
+  .control-dot.yellow { background: #ffbd2e; }
+  .control-dot.green { background: #27c93f; }
+
+  .chat-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .agent-avatar {
+    font-size: 1.2rem;
+  }
+
+  .agent-name {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .agent-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .badge-tech {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent-cyan);
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid var(--border-cyan);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .chat-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-height: 380px;
+    overflow-y: auto;
+  }
+
+  .message {
+    display: flex;
+    gap: 10px;
+    max-width: 85%;
+  }
+
+  .system-message {
+    max-width: 100%;
+    justify-content: center;
+  }
+
+  .system-message .msg-content {
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  .msg-badge {
+    font-family: var(--font-mono);
+    color: var(--accent-purple);
+    font-weight: 700;
+    margin-right: 6px;
+  }
+
+  .user-message {
+    align-self: flex-end;
+  }
+
+  .user-message .msg-bubble {
+    background: linear-gradient(135deg, var(--accent-purple), #6d28d9);
+    color: #ffffff;
+    border-radius: 14px 14px 2px 14px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .agent-message {
+    align-self: flex-start;
+  }
+
+  .agent-avatar-small {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: rgba(6, 182, 212, 0.15);
+    border: 1px solid var(--border-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .agent-message .msg-bubble {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    border-radius: 2px 14px 14px 14px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    color: var(--text-main);
+  }
+
+  .chat-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .stat-pill {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent-emerald);
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .quick-prompts {
+    display: flex;
+    gap: 8px;
+    padding: 0 1.5rem 1rem 1.5rem;
+    overflow-x: auto;
+  }
+
+  .prompt-chip {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+
+  .prompt-chip:hover {
+    background: rgba(139, 92, 246, 0.12);
+    border-color: var(--accent-purple);
+    color: #ffffff;
+  }
+
+  .chat-input-area {
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #chat-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+  }
+
+  .send-btn {
+    background: var(--accent-purple);
+    border: none;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+</style>

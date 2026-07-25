@@ -1,0 +1,30 @@
+backend:
+  name: git-gateway
+  branch: main # Rama principal de GitHub
+
+# Carpeta donde se guardan las imágenes subidas desde el CMS
+media_folder: "public/uploads"
+# Ruta pública accesible desde el frontend
+public_folder: "/uploads"
+
+# Idioma de la interfaz
+locale: "es"
+
+collections:
+  - name: "blog"
+    label: "Publicaciones del Blog"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Título de la Entrada", name: "title", widget: "string" }
+      - { label: "Fecha de Publicación", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Borrador", name: "draft", widget: "boolean", default: false }
+      - { label: "Categoría", name: "category", widget: "select", options: ["Agentes de IA", "Automatización B2B", "Casos de Éxito", "Estrategia empresarial"], default: "Agentes de IA" }
+      - { label: "Resumen (Excerpt)", name: "excerpt", widget: "text" }
+      - { label: "Imagen Destacada", name: "image", widget: "image", required: false, default: "/uploads/default-agent.jpg" }
+      - { label: "Autor", name: "author", widget: "string", default: "Agentes IA Team" }
+      - { label: "Tiempo estimado de lectura", name: "readTime", widget: "string", default: "4 min de lectura" }
+      - { label: "Contenido del Artículo", name: "body", widget: "markdown" }
